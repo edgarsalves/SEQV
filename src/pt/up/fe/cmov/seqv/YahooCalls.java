@@ -72,21 +72,18 @@ public class YahooCalls {
 		}
 		return ret;
 	}
-	//TODO
-	/*
-	public static ArrayList<QuoteEvolution> quoteToObject(String table){
-		ArrayList<QuoteEvolution> ret = new ArrayList<QuoteEvolution>();
+	public static ArrayList<Quote> quoteToObject(String table){
+		ArrayList<Quote> ret = new ArrayList<Quote>();
 
 		StringTokenizer stLine = new StringTokenizer(table, "\n");
-		String line = stLine.nextElement().toString();
 		while (stLine.hasMoreElements()) {
-			line = stLine.nextElement().toString();
-			QuoteEvolution q = new QuoteEvolution(line);
+			String line = stLine.nextElement().toString();
+			Quote q = new Quote(line);
 			ret.add(q);
 		}
 
 		return ret;	
-	}*/
+	}
 
 	public static HashMap<String, String> searchCompanyQuery(String query){
 		JSONObject json = null;

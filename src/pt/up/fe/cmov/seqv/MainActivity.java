@@ -1,5 +1,8 @@
 package pt.up.fe.cmov.seqv;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -39,7 +42,11 @@ public class MainActivity extends Activity {
 				public void onClick(View arg0) {
 					finish();
 				}
-			});		
+			});	
+			
+			//TODO
+			String s = YahooCalls.getQuotes(new ArrayList<String>(Arrays.asList("dell", "msft")));
+			YahooCalls.quoteToObject(s);
 		}
 		
 		public static boolean isOnline(Context context) {
