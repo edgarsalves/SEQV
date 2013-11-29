@@ -5,36 +5,109 @@ import java.util.HashMap;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class AddShareActivity extends Activity {
-	HashMap<String, String> results;
-	ArrayList<String> symbols;
-	ListView lvSearch;
-	Context context = this;
+	private Context context = this;
+	private ListView lvSearch;
+	private HashMap<String, String> results;
+	private ArrayList<String> symbols;
+	private int counter = 1;
+	private String symbol;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_share);
-		
+
 		results = new HashMap<String, String>();
 		symbols = new ArrayList<String>(results.keySet());
-		
+
 		final TextView tvQuery = (TextView) findViewById(R.id.asQuery);
-		
+
 		lvSearch = (ListView) findViewById(R.id.asList);
 		lvSearch.setAdapter(new SearchResultsAdapter(context));
-		
+
+		lvSearch.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,int position, long id) 
+			{
+				symbol = symbols.get(position);
+				//TODO GET SYMBOL FROM YAHOO
+				counter = 1;
+
+				final Dialog addShareDialog = new Dialog(context);
+				addShareDialog.setContentView(R.layout.dialog_add_share);
+				addShareDialog.setTitle("Add share of " + symbol);
+
+				final TextView tvSymbol = (TextView) addShareDialog.findViewById(R.id.dasSymbol);
+				tvSymbol.setText("Symbol: " + symbol);
+				
+				final TextView tvName = (TextView) addShareDialog.findViewById(R.id.dasName);
+				tvName.setText("Name: " + results.get(symbol));
+
+				final TextView tvNumber = (TextView) addShareDialog.findViewById(R.id.dasNumber);
+				tvNumber.setText(Integer.toString(counter));
+
+				final ImageButton btnMinus = (ImageButton) addShareDialog.findViewById(R.id.dasMinus);
+				btnMinus.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if(counter>1){
+							counter--;
+							tvNumber.setText(Integer.toString(counter));
+						}
+					}
+				});
+				
+				final ImageButton btnPlus = (ImageButton) addShareDialog.findViewById(R.id.dasPlus);
+				btnPlus.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						counter++;
+						tvNumber.setText(Integer.toString(counter));
+					}
+				});
+
+				final Button btnConfirm = (Button) addShareDialog.findViewById(R.id.dasConfirm);
+				btnConfirm.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Builder confirmationDialog = new AlertDialog.Builder(context);
+						confirmationDialog.setTitle("");
+						confirmationDialog.setMessage("Do you really want to proceed?");
+						confirmationDialog.setIcon(android.R.drawable.ic_dialog_alert);
+						confirmationDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								MainActivity.updateMyPortfolio(symbol, counter);
+								Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+								addShareDialog.dismiss();
+							}});
+						confirmationDialog.setNegativeButton(R.string.no, null);
+						confirmationDialog.show();
+					}
+				});
+				
+				addShareDialog.show();
+			}
+		});
+
 		Button btnSearch = (Button) findViewById(R.id.asSearch);
 		btnSearch.setOnClickListener(new OnClickListener() {
 			@Override
@@ -53,7 +126,7 @@ public class AddShareActivity extends Activity {
 		getMenuInflater().inflate(R.menu.add_share, menu);
 		return false;
 	}
-
+	
 	class SearchResultsAdapter extends BaseAdapter {
 		Context context;
 
@@ -88,13 +161,13 @@ public class AddShareActivity extends Activity {
 			TextView description = (TextView)vi.findViewById(R.id.rowDescription);
 			//TextView price = (TextView)vi.findViewById(R.id.rowRightDescription);
 			//ImageView image = (ImageView)vi.findViewById(R.id.rowImage);
-			
+
 			String symbol = symbols.get(position);
 			String name = results.get(symbol);
-			
+
 			title.setText(symbol);
 			description.setText(name);
-			
+
 			return vi;
 		}
 	}

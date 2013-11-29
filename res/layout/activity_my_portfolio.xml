@@ -11,35 +11,37 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AddShareActivity" >
+    tools:context=".MyPortfolioActivity" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical" >
 
-        <EditText
-            android:id="@+id/asQuery"
-            android:layout_width="0dip"
-            android:inputType="text"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10" >
-            <requestFocus />
-        </EditText>
-
-        <Button
-            android:id="@+id/asSearch"
+        <TextView
+            android:id="@+id/mpText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/button_bg"
-            android:text="@string/search"
-            android:textColor="@color/orange0" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right" >
+
+            <Button
+                android:id="@+id/mpAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:text="@string/addShare"
+                android:layout_marginBottom="10dip"
+                android:textColor="@color/orange0" />
+        </LinearLayout>
     </LinearLayout>
 
     <ListView
-        android:id="@+id/asList"
+        android:id="@+id/mpList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>

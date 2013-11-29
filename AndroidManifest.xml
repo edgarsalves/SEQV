@@ -26,12 +26,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="pt.up.fe.cmov.seqv.MySharesActivity"
-            android:label="@string/title_activity_my_shares" >
-        </activity>
-        <activity
             android:name="pt.up.fe.cmov.seqv.AddShareActivity"
             android:label="@string/title_activity_add_share" >
+        </activity>
+        <activity
+            android:name="pt.up.fe.cmov.seqv.MyPortfolioActivity"
+            android:label="@string/title_activity_my_portfolio" >
         </activity>
     </application>
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/dasSymbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/dasName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/dasMinus"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:background="@drawable/button_bg"
+            android:contentDescription="@android:drawable/ic_media_previous"
+            android:src="@android:drawable/ic_media_previous" />
+
+        <TextView
+            android:id="@+id/dasNumber"
+            android:layout_width="50dip"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageButton
+            android:id="@+id/dasPlus"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:background="@drawable/button_bg"
+            android:contentDescription="@android:drawable/ic_media_next"
+            android:src="@android:drawable/ic_media_next" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal" >
+
+        <Button
+            android:id="@+id/dasConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="10dip"
+            android:background="@drawable/button_bg"
+            android:text="@string/confirm"
+            android:textColor="@color/orange0" />
+    </LinearLayout>
+
+</LinearLayout>
