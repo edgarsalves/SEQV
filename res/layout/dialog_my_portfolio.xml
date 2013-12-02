@@ -16,22 +16,31 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/dasSymbol"
+            android:id="@+id/dmpSymbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:id="@+id/dasName"
+            android:id="@+id/dmpName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:id="@+id/dasPrice"
+            android:id="@+id/dmpPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <ImageButton
+            android:id="@+id/dmpEvolution"
+            android:layout_width="45dp"
+            android:layout_height="36dp"
+            android:background="@drawable/button_bg"
+            android:scaleType="fitXY"
+            android:src="@drawable/graph"
+            android:contentDescription="@drawable/graph"/>
     </LinearLayout>
 
     <LinearLayout
@@ -42,7 +51,7 @@
         android:orientation="horizontal" >
 
         <ImageButton
-            android:id="@+id/dasMinus"
+            android:id="@+id/dmpMinus"
             android:layout_width="40dip"
             android:layout_height="40dip"
             android:background="@drawable/button_bg"
@@ -50,14 +59,14 @@
             android:src="@android:drawable/ic_media_previous" />
 
         <TextView
-            android:id="@+id/dasNumber"
+            android:id="@+id/dmpNumber"
             android:layout_width="50dip"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageButton
-            android:id="@+id/dasPlus"
+            android:id="@+id/dmpPlus"
             android:layout_width="40dip"
             android:layout_height="40dip"
             android:background="@drawable/button_bg"
@@ -71,7 +80,7 @@
         android:gravity="center_vertical|center_horizontal" >
 
         <Button
-            android:id="@+id/dasConfirm"
+            android:id="@+id/dmpConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip"

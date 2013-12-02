@@ -1,7 +1,7 @@
 package pt.up.fe.cmov.seqv;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.TreeMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	private Context context = this;
-	public static HashMap<String, Integer> myPortfolio;
+	public static TreeMap<String, Integer> myPortfolio;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		String str = preferences.getString("myPortfolio","");
 
-		myPortfolio = new HashMap<String, Integer>();
+		myPortfolio = new TreeMap<String, Integer>();
 
 		if(str.length()!=0){
 			JSONObject json;
@@ -75,9 +75,9 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	public void updateDatabase(){
+	public static void updateDatabase(Context context){
 		JSONObject json = new JSONObject(myPortfolio);
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.putString("myPortfolio", json.toString());
 		editor.commit();
@@ -100,7 +100,7 @@ public class MainActivity extends Activity {
 	}
 
 	//number=0 -> remove symbol
-	public static void updateMyPortfolio(String symbol, Integer number){
+	public static void updateMyPortfolio(String symbol, Integer number, Context context){
 		if(myPortfolio.containsKey(symbol)){
 			if(number==0)
 				myPortfolio.remove(symbol);
@@ -118,12 +118,8 @@ public class MainActivity extends Activity {
 			myPortfolio.put(symbol, number);
 		else
 			Log.e("ERROR", "Update my portfolio failed!");
-	}
-
-	@Override
-	protected void onResume() {
-		updateDatabase();		
-		super.onResume();
+		
+		updateDatabase(context);		
 	}
 	
 	public static int getNCompanys(){

@@ -1,6 +1,7 @@
 package pt.up.fe.cmov.seqv;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class AddShareActivity extends Activity {
 	private ArrayList<String> symbols;
 	private int counter = 1;
 	private String symbol;
+	private Quote q;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,63 +50,68 @@ public class AddShareActivity extends Activity {
 		lvSearch.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) 
 			{
-				symbol = symbols.get(position);
-				//TODO GET SYMBOL FROM YAHOO
-				counter = 1;
+				if(MainActivity.isOnline(context)){
+					symbol = symbols.get(position);
+					q = YahooCalls.getQuotes(new ArrayList<String>(Arrays.asList(symbol))).get(0);
+					counter = 1;
 
-				final Dialog addShareDialog = new Dialog(context);
-				addShareDialog.setContentView(R.layout.dialog_add_share);
-				addShareDialog.setTitle("Add share of " + symbol);
+					final Dialog addShareDialog = new Dialog(context);
+					addShareDialog.setContentView(R.layout.dialog_add_share);
+					addShareDialog.setTitle("Add share of " + symbol);
 
-				final TextView tvSymbol = (TextView) addShareDialog.findViewById(R.id.dasSymbol);
-				tvSymbol.setText("Symbol: " + symbol);
-				
-				final TextView tvName = (TextView) addShareDialog.findViewById(R.id.dasName);
-				tvName.setText("Name: " + results.get(symbol));
+					final TextView tvSymbol = (TextView) addShareDialog.findViewById(R.id.dasSymbol);
+					tvSymbol.setText("Symbol: " + symbol);
 
-				final TextView tvNumber = (TextView) addShareDialog.findViewById(R.id.dasNumber);
-				tvNumber.setText(Integer.toString(counter));
+					final TextView tvName = (TextView) addShareDialog.findViewById(R.id.dasName);
+					tvName.setText("Name: " + results.get(symbol));
 
-				final ImageButton btnMinus = (ImageButton) addShareDialog.findViewById(R.id.dasMinus);
-				btnMinus.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						if(counter>1){
-							counter--;
+					final TextView tvPrice = (TextView) addShareDialog.findViewById(R.id.dasPrice);
+					tvPrice.setText("Price: " + q.price);
+
+					final TextView tvNumber = (TextView) addShareDialog.findViewById(R.id.dasNumber);
+					tvNumber.setText(Integer.toString(counter));
+
+					final ImageButton btnMinus = (ImageButton) addShareDialog.findViewById(R.id.dasMinus);
+					btnMinus.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if(counter>1){
+								counter--;
+								tvNumber.setText(Integer.toString(counter));
+							}
+						}
+					});
+
+					final ImageButton btnPlus = (ImageButton) addShareDialog.findViewById(R.id.dasPlus);
+					btnPlus.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							counter++;
 							tvNumber.setText(Integer.toString(counter));
 						}
-					}
-				});
-				
-				final ImageButton btnPlus = (ImageButton) addShareDialog.findViewById(R.id.dasPlus);
-				btnPlus.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						counter++;
-						tvNumber.setText(Integer.toString(counter));
-					}
-				});
+					});
 
-				final Button btnConfirm = (Button) addShareDialog.findViewById(R.id.dasConfirm);
-				btnConfirm.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Builder confirmationDialog = new AlertDialog.Builder(context);
-						confirmationDialog.setTitle("");
-						confirmationDialog.setMessage("Do you really want to proceed?");
-						confirmationDialog.setIcon(android.R.drawable.ic_dialog_alert);
-						confirmationDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int whichButton) {
-								MainActivity.updateMyPortfolio(symbol, counter);
-								Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
-								addShareDialog.dismiss();
-							}});
-						confirmationDialog.setNegativeButton(R.string.no, null);
-						confirmationDialog.show();
-					}
-				});
-				
-				addShareDialog.show();
+					final Button btnConfirm = (Button) addShareDialog.findViewById(R.id.dasConfirm);
+					btnConfirm.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							Builder confirmationDialog = new AlertDialog.Builder(context);
+							confirmationDialog.setTitle("");
+							confirmationDialog.setMessage("Do you really want to add these shares?");
+							confirmationDialog.setIcon(android.R.drawable.ic_dialog_alert);
+							confirmationDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int whichButton) {
+									MainActivity.updateMyPortfolio(symbol, counter, context);
+									Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+									addShareDialog.dismiss();
+								}});
+							confirmationDialog.setNegativeButton(R.string.no, null);
+							confirmationDialog.show();
+						}
+					});
+
+					addShareDialog.show();
+				}
 			}
 		});
 
@@ -112,21 +119,22 @@ public class AddShareActivity extends Activity {
 		btnSearch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				String query = tvQuery.getText().toString();
-				results = YahooCalls.searchCompanyQuery(query);
-				symbols  = new ArrayList<String>(results.keySet());
-				lvSearch.setAdapter(new SearchResultsAdapter(context));
+				if(MainActivity.isOnline(context)){
+					String query = tvQuery.getText().toString();
+					results = YahooCalls.searchCompanyQuery(query);
+					symbols  = new ArrayList<String>(results.keySet());
+					lvSearch.setAdapter(new SearchResultsAdapter(context));
+				}
 			}
 		});	
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_share, menu);
 		return false;
 	}
-	
+
 	class SearchResultsAdapter extends BaseAdapter {
 		Context context;
 

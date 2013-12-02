@@ -12,5 +12,8 @@
     <string name="confirm">Confirm</string>
     <string name="title_activity_add_share">Add Share</string>
     <string name="title_activity_my_portfolio">My Portfolio</string>
+    <string name="title_activity_quote_evolution">Quote Evolution</string>
+    <string name="see_evolution">See evolution</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

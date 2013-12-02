@@ -33,6 +33,10 @@
             android:name="pt.up.fe.cmov.seqv.MyPortfolioActivity"
             android:label="@string/title_activity_my_portfolio" >
         </activity>
+        <activity
+            android:name="pt.up.fe.cmov.seqv.QuoteEvolutionActivity"
+            android:label="@string/title_activity_quote_evolution" >
+        </activity>
     </application>
 
 </manifest>

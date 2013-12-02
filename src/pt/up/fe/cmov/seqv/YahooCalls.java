@@ -22,7 +22,11 @@ public class YahooCalls {
 	//e – final day 
 	//f – final year 
 	//g – periodicity (d - daily; w - weekly; m - monthly)
-	public static String getQuoteEvolution(String a, String b, String c, String d, String e, String f, String g, String s){
+	public static ArrayList<QuoteEvolution> getQuoteEvolution(String a, String b, String c, String d, String e, String f, String g, String s){
+		String str = getStringQuoteEvolution(a, b, c, d, e, f, g, s);
+		return stringToQuoteEvolution(str);
+	}
+	private static String getStringQuoteEvolution(String a, String b, String c, String d, String e, String f, String g, String s){
 		String ret = null;
 		String path = "http://ichart.finance.yahoo.com/table.txt?";
 		path += "a=" + (Integer.valueOf(a)-1);
@@ -40,7 +44,7 @@ public class YahooCalls {
 		}
 		return ret;
 	}
-	public static ArrayList<QuoteEvolution> quoteEvolutionToObject(String table){
+	private static ArrayList<QuoteEvolution> stringToQuoteEvolution(String table){
 		ArrayList<QuoteEvolution> ret = new ArrayList<QuoteEvolution>();
 
 		StringTokenizer stLine = new StringTokenizer(table, "\n");
@@ -54,7 +58,11 @@ public class YahooCalls {
 		return ret;	
 	}
 	
-	public static String getQuotes(ArrayList<String> s){
+	public static ArrayList<Quote> getQuotes(ArrayList<String> s){
+		String str = getStringQuotes(s);
+		return stringToQuote(str);
+	}
+	private static String getStringQuotes(ArrayList<String> s){
 		String ret = null;
 		String path = "http://finance.yahoo.com/d/quotes?f=sl1d1t1v&s=";
 		for(int i = 0; i<s.size(); i++){
@@ -72,7 +80,7 @@ public class YahooCalls {
 		}
 		return ret;
 	}
-	public static ArrayList<Quote> quoteToObject(String table){
+	private static ArrayList<Quote> stringToQuote(String table){
 		ArrayList<Quote> ret = new ArrayList<Quote>();
 
 		StringTokenizer stLine = new StringTokenizer(table, "\n");
@@ -109,7 +117,11 @@ public class YahooCalls {
 				
 		return list;
 	}
-
+	
+	public static String getCompanyName(String symbol){
+		HashMap<String, String> map = searchCompanyQuery(symbol);
+		return map.get(symbol);
+	}
 
 	private static String getHTTPAsync(final String path){
 		getResponse = null;
