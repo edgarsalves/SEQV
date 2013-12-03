@@ -29,7 +29,7 @@ public class YahooCalls {
 	private static String getStringQuoteEvolution(String a, String b, String c, String d, String e, String f, String g, String s){
 		String ret = null;
 		String path = "http://ichart.finance.yahoo.com/table.txt?";
-		path += "a=" + (Integer.valueOf(a)-1);
+		path += "a=" + a;
 		path += "&b=" + b;
 		path += "&c=" + c;
 		path += "&d=" + d;

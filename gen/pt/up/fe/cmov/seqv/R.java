@@ -46,37 +46,43 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayout1=0x7f090000;
-        public static final int action_settings=0x7f09001f;
+        public static final int action_settings=0x7f090025;
         public static final int appname=0x7f090004;
         public static final int asList=0x7f090003;
         public static final int asQuery=0x7f090001;
         public static final int asSearch=0x7f090002;
-        public static final int dasConfirm=0x7f090011;
-        public static final int dasMinus=0x7f09000e;
-        public static final int dasName=0x7f09000c;
-        public static final int dasNumber=0x7f09000f;
-        public static final int dasPlus=0x7f090010;
-        public static final int dasPrice=0x7f09000d;
-        public static final int dasSymbol=0x7f09000b;
-        public static final int dmpConfirm=0x7f090019;
-        public static final int dmpEvolution=0x7f090015;
-        public static final int dmpMinus=0x7f090016;
-        public static final int dmpName=0x7f090013;
-        public static final int dmpNumber=0x7f090017;
-        public static final int dmpPlus=0x7f090018;
-        public static final int dmpPrice=0x7f090014;
-        public static final int dmpSymbol=0x7f090012;
+        public static final int dasConfirm=0x7f090013;
+        public static final int dasMinus=0x7f090010;
+        public static final int dasName=0x7f09000e;
+        public static final int dasNumber=0x7f090011;
+        public static final int dasPlus=0x7f090012;
+        public static final int dasPrice=0x7f09000f;
+        public static final int dasSymbol=0x7f09000d;
+        public static final int dmpConfirm=0x7f09001b;
+        public static final int dmpEvolution=0x7f090017;
+        public static final int dmpMinus=0x7f090018;
+        public static final int dmpName=0x7f090015;
+        public static final int dmpNumber=0x7f090019;
+        public static final int dmpPlus=0x7f09001a;
+        public static final int dmpPrice=0x7f090016;
+        public static final int dmpSymbol=0x7f090014;
+        public static final int graph_holder=0x7f09000b;
+        public static final int last_month=0x7f09001e;
+        public static final int last_months=0x7f09001d;
+        public static final int last_week=0x7f09001f;
+        public static final int last_year=0x7f09001c;
         public static final int mExit=0x7f090006;
         public static final int mMyShares=0x7f090005;
         public static final int mpAdd=0x7f090008;
         public static final int mpList=0x7f090009;
         public static final int mpText=0x7f090007;
         public static final int qeLayout=0x7f09000a;
-        public static final int rowDescription=0x7f09001d;
-        public static final int rowImage=0x7f09001b;
-        public static final int rowRightDescription=0x7f09001e;
-        public static final int rowThumbnail=0x7f09001a;
-        public static final int rowTitle=0x7f09001c;
+        public static final int rowDescription=0x7f090023;
+        public static final int rowImage=0x7f090021;
+        public static final int rowRightDescription=0x7f090024;
+        public static final int rowThumbnail=0x7f090020;
+        public static final int rowTitle=0x7f090022;
+        public static final int time_frame=0x7f09000c;
     }
     public static final class layout {
         public static final int activity_add_share=0x7f030000;
@@ -85,7 +91,8 @@ public final class R {
         public static final int activity_quote_evolution=0x7f030003;
         public static final int dialog_add_share=0x7f030004;
         public static final int dialog_my_portfolio=0x7f030005;
-        public static final int row_layout=0x7f030006;
+        public static final int dialog_time_frame=0x7f030006;
+        public static final int row_layout=0x7f030007;
     }
     public static final class menu {
         public static final int add_share=0x7f080000;
