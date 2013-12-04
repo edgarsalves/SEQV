@@ -13,16 +13,17 @@
     tools:context=".MainActivity" >
 
     <LinearLayout
+        android:id="@+id/graph_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
         android:layout_weight="0.96"
-        android:orientation="vertical"
-        android:id="@+id/graph_holder" >
+        android:orientation="vertical" >
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical" >
 
         <Button
@@ -31,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_bg"
-             android:textColor="@color/orange0"
-            android:text="Time frame" />
+            android:text="@string/time_frame"
+            android:textColor="@color/orange0" />
     </LinearLayout>
 
 </LinearLayout>
