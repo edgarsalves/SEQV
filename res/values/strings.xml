@@ -19,5 +19,8 @@
     <string name="last_3months">Last 3 Months</string>
     <string name="last_month">Last Month</string>
     <string name="last_7days">Last 7 days</string>
-    
+    <string name="compare">Compare</string>
+    <string name="title_activity_comparation">Comparation</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

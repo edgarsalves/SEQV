@@ -2,6 +2,7 @@ package pt.up.fe.cmov.seqv;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -18,10 +19,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -37,6 +41,9 @@ public class MyPortfolioActivity extends Activity {
 	public static String symbol;
 	public static String name;
 	private Quote q;
+
+	private Spinner s1, s2;
+	private int symbol1, symbol2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +160,95 @@ public class MyPortfolioActivity extends Activity {
 				startActivity(i);
 			}
 		});
+
+		Button btnCompare = (Button) findViewById(R.id.mpCompare);
+		btnCompare.setOnClickListener(new OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				if(MainActivity.getNCompanys()>1){
+					final Dialog compareDialog = new Dialog(context);
+					compareDialog.setContentView(R.layout.dialog_compare);
+					compareDialog.setTitle("Comparation");
+
+					s1 = (Spinner) compareDialog.findViewById(R.id.dcCombobox1);
+					s2 = (Spinner) compareDialog.findViewById(R.id.dcCombobox2);
+					addItemsOnSpinners();
+					setSpinnersListeners();
+
+					Button btnCompare = (Button) compareDialog.findViewById(R.id.dcCompare);
+					btnCompare.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							Intent i = new Intent(context, ComparationActivity.class);
+							startActivity(i);
+							compareDialog.dismiss();
+						}
+					});
+					compareDialog.show();
+				}
+			}
+		});
+	}
+
+	private void setSpinnersListeners(){
+		s1.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				String selected = parentView.getItemAtPosition(position).toString();
+
+				if(selected.equals(symbols.get(symbol2))){
+					Toast.makeText(context, "Already selected!", Toast.LENGTH_SHORT).show();
+					@SuppressWarnings("unchecked")
+					int spinnerPosition = ((ArrayAdapter<String>) s1.getAdapter()).getPosition(symbols.get(symbol1));
+					s1.setSelection(spinnerPosition);
+				}
+				else
+					symbol1 = symbols.indexOf(selected);
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+			}
+		});
+
+		s2.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				String selected = parentView.getItemAtPosition(position).toString();
+
+				if(selected.equals(symbols.get(symbol1))){
+					Toast.makeText(context, "Already selected!", Toast.LENGTH_SHORT).show();
+					@SuppressWarnings("unchecked")
+					int spinnerPosition = ((ArrayAdapter<String>) s2.getAdapter()).getPosition(symbols.get(symbol2));
+					s2.setSelection(spinnerPosition);
+				}
+				else
+					symbol2 = symbols.indexOf(selected);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+			}
+		});
+	}
+
+	private void addItemsOnSpinners() {
+		List<String> list = new ArrayList<String>();
+		for(int i = 0; i < symbols.size(); i++){
+			list.add(symbols.get(i));
+		}
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, list);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		s1.setAdapter(dataAdapter);
+		symbol1 = 0;
+		int s1pos = dataAdapter.getPosition(symbols.get(symbol1));
+		s1.setSelection(s1pos);
+
+		s2.setAdapter(dataAdapter);
+		symbol2 = 1;
+		int s2pos = dataAdapter.getPosition(symbols.get(symbol2));
+		s2.setSelection(s2pos);
 	}
 
 	@Override
