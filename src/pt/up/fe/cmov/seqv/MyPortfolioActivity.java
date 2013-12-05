@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -106,6 +107,14 @@ public class MyPortfolioActivity extends Activity {
 								counter--;
 								tvNumber.setText(Integer.toString(counter));
 							}
+						}
+					});
+					btnMinus.setOnLongClickListener(new OnLongClickListener() {	
+						@Override
+						public boolean onLongClick(View v) {
+							counter=0;
+							tvNumber.setText(Integer.toString(counter));
+							return true;
 						}
 					});
 
