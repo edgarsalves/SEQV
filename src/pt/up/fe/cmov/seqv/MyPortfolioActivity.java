@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -34,7 +35,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class MyPortfolioActivity extends Activity {
 	private Context context = this;
 	private ListView lvSearch;
-	private ArrayList<String> symbols;
+	public static ArrayList<String> symbols;
 	private TextView tvNCompanys;
 
 	private int counter;
@@ -44,7 +45,7 @@ public class MyPortfolioActivity extends Activity {
 	private Quote q;
 
 	private Spinner s1, s2;
-	private int symbol1, symbol2;
+	public static int symbol1, symbol2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -188,9 +189,11 @@ public class MyPortfolioActivity extends Activity {
 					btnCompare.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
+							compareDialog.dismiss();
+
+							Log.i("debugger", "Something 0");
 							Intent i = new Intent(context, ComparationActivity.class);
 							startActivity(i);
-							compareDialog.dismiss();
 						}
 					});
 					compareDialog.show();

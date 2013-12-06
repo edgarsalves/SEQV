@@ -80,15 +80,11 @@ public class QuoteEvolutionActivity extends Activity {
 				int month_bef = cal.get(Calendar.MONTH) - 3;
 				int year_bef = cal.get(Calendar.YEAR);
 
-				//TODO confirma se é <= 0 ou < 0 (se for 0 queres janeiro e não dezembro)
-				//TODO nao esquecer que o Calendar.MONTH devolve 0 para janeiro
-				if(month_bef <= 0){
+				if(month_bef < 0){
 					year_bef--;
-					//TODO confirma se é 12 ou 11
-					month_bef = 12 + month_bef;
+					month_bef = 11 + month_bef;
 				}
 
-				//TODO testaste isto quando o mes nao tem 31 dias?
 				build_graph(context.getString(R.string.last_3months), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "w", MyPortfolioActivity.symbol);
 				timeFrameDialog.dismiss();
 			}	
@@ -98,10 +94,10 @@ public class QuoteEvolutionActivity extends Activity {
 			public void onClick(View arg0) {
 				int month_bef = cal.get(Calendar.MONTH)-1;
 				int year_bef = cal.get(Calendar.YEAR);
-				//TODO aqui a mesma coisa que no caso acima
-				if(month_bef <= 0){
+
+				if(month_bef < 0){
 					year_bef--;
-					month_bef = 12 + month_bef;
+					month_bef = 11 + month_bef;
 				}
 
 				build_graph(context.getString(R.string.last_month), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "d", MyPortfolioActivity.symbol);
@@ -114,7 +110,6 @@ public class QuoteEvolutionActivity extends Activity {
 				Calendar last_week_calendar = Calendar.getInstance();
 				last_week_calendar.add(Calendar.DAY_OF_YEAR, -7);
 
-				//TODO neste caso se calhar faz mais sentido ter Last 7 days em vez de last week no botao
 				build_graph(context.getString(R.string.last_7days),
 						Integer.toString( last_week_calendar.get(Calendar.MONTH) ), 
 						Integer.toString( last_week_calendar.get(Calendar.DAY_OF_MONTH) ), 
@@ -166,16 +161,16 @@ public class QuoteEvolutionActivity extends Activity {
 			graph_data[iteration] = new GraphViewData(num_columns-iteration, quote.close);
 
 			if( g == "m"){
-				String year_str = Integer.toString(quote_calendar.get( Calendar.YEAR ));
-				String year_short = year_str.substring(2);
-				labels[iteration++] = column+"-"+ year_short;
+				//String year_str = Integer.toString(quote_calendar.get( Calendar.YEAR ));
+				//String year_short = year_str.substring(2);
+				labels[iteration++] = column+"";
 			}
 			else {
 				labels[iteration++] = column+"-"+ (quote_calendar.get( Calendar.MONTH )+1);
 			}
 
-			Log.i("debugger", "Date "+quote.date.toString());
-			Log.i("debugger", "Column "+column);
+			//Log.i("debugger", "Date "+quote.date.toString());
+			//Log.i("debugger", "Column "+column);
 		}
 
 		GraphViewDataInterface[] gvData = graph_data;
