@@ -6,6 +6,7 @@ import java.util.Calendar;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewDataInterface;
 import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.LineGraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 
@@ -18,7 +19,6 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Color;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -36,11 +36,8 @@ public class ComparationActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i("debugger", "Something 1");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comparation);
-		
-		Log.i("debugger", "Something 2");
 		
 		//Today's date
 		cal = Calendar.getInstance();
@@ -127,7 +124,7 @@ public class ComparationActivity extends Activity {
 			}	
 		});
 
-		Button btn = (Button) findViewById(R.id.time_frame); 
+		Button btn = (Button) findViewById(R.id.time_frame_comparation); 
 		btn.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View v) {
@@ -140,16 +137,20 @@ public class ComparationActivity extends Activity {
 	
 	public void build_graph(String type, String a, String b, String c, String d, String e, String f, String g){
 		System.out.println(c);
+		
+		String symb1 = MyPortfolioActivity.symbols.get( MyPortfolioActivity.symbol1 );
+		String symb2 = MyPortfolioActivity.symbols.get( MyPortfolioActivity.symbol2 );
 
 		//First Company
-		ArrayList<QuoteEvolution> evo1 = YahooCalls.getQuoteEvolution(a, b, c, d, e, f, g, MyPortfolioActivity.symbols.get( MyPortfolioActivity.symbol1 ));
+		ArrayList<QuoteEvolution> evo1 = YahooCalls.getQuoteEvolution(a, b, c, d, e, f, g, symb1);
 		
 		//Second Company
-		ArrayList<QuoteEvolution> evo2 = YahooCalls.getQuoteEvolution(a, b, c, d, e, f, g, MyPortfolioActivity.symbols.get( MyPortfolioActivity.symbol2 ));
+		ArrayList<QuoteEvolution> evo2 = YahooCalls.getQuoteEvolution(a, b, c, d, e, f, g, symb2);
 
 		int num_columns = evo1.size();
 		int num_datas = evo1.size() + evo2.size();
-		GraphViewData[] graph_data = new GraphViewData[ num_datas ];
+		GraphViewData[] graph_data1 = new GraphViewData[ evo1.size() ];
+		GraphViewData[] graph_data2 = new GraphViewData[ evo2.size() ];
 
 		String[] labels = new String[num_columns];
 
@@ -164,13 +165,13 @@ public class ComparationActivity extends Activity {
 
 			//Add Data to graph
 			int column = g == "m" ? quote_calendar.get( Calendar.MONTH )+1 : (g == "w" ? quote_calendar.get( Calendar.WEEK_OF_MONTH ) : quote_calendar.get( Calendar.DAY_OF_MONTH ) );
-			graph_data[iteration] = new GraphViewData(num_columns-iteration, quote.close);
+			graph_data1[iteration] = new GraphViewData(num_columns-iteration, quote.close);
 
 			if( g == "m"){
 				labels[iteration++] = column+"";
 			}
 			else {
-				labels[iteration++] = column+"-"+ (quote_calendar.get( Calendar.MONTH )+1);
+				labels[iteration++] = column+"/"+ (quote_calendar.get( Calendar.MONTH )+1);
 			}
 		}
 		iteration = 0;
@@ -183,14 +184,19 @@ public class ComparationActivity extends Activity {
 			quote_calendar.setTime(quote.date);
 
 			//Add Data to graph
-			graph_data[iteration++] = new GraphViewData(num_columns-iteration, quote.close);
+			graph_data2[iteration++] = new GraphViewData(num_columns-iteration, quote.close);
 		}
 
-		GraphViewDataInterface[] gvData = graph_data;
+		GraphViewDataInterface[] gvData1 = graph_data1;
+		GraphViewDataInterface[] gvData2 = graph_data2;
 
-		GraphViewSeries exampleSeries = new GraphViewSeries(gvData);  
-		GraphView graphView = new LineGraphView(this, MyPortfolioActivity.symbol + " - " + type);  
-		graphView.addSeries(exampleSeries); 
+		GraphViewSeries series1 = new GraphViewSeries(symb1, new GraphViewSeriesStyle(getResources().getColor(R.color.blue2), 1), gvData1);  
+		GraphViewSeries series2 = new GraphViewSeries(symb2, new GraphViewSeriesStyle(getResources().getColor(R.color.orange0), 1), gvData2);  
+		
+		GraphView graphView = new LineGraphView(this, symb1 +" and "+ symb2 + " - " + type); 
+		
+		graphView.addSeries(series1); 
+		graphView.addSeries(series2); 
 
 		graphView.setHorizontalLabels( labels );  
 
@@ -199,20 +205,16 @@ public class ComparationActivity extends Activity {
 		graphView.getGraphViewStyle().setVerticalLabelsColor(getResources().getColor(R.color.orange0));
 		graphView.getGraphViewStyle().setTextSize(getResources().getDimension(R.dimen.text_size));
 		graphView.getGraphViewStyle().setNumHorizontalLabels( num_columns );
-		graphView.getGraphViewStyle().setNumVerticalLabels( graph_data.length );
+		graphView.getGraphViewStyle().setNumVerticalLabels( Math.max(graph_data1.length, graph_data2.length) );
+		graphView.setShowLegend(true); 
 		graphView.setScrollable(true);
 		graphView.setScalable(true);
 		//graphView.getGraphViewStyle().setVerticalLabelsWidth(20);
 
-		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_holder);  
+		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_holder_comparation);  
 		layout.removeAllViews();
 		layout.addView(graphView);
 	}
 
-	/*@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.comparation, menu);
-		return false;
-	}*/
 
 }

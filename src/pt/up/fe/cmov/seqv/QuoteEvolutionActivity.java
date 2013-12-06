@@ -166,7 +166,7 @@ public class QuoteEvolutionActivity extends Activity {
 				labels[iteration++] = column+"";
 			}
 			else {
-				labels[iteration++] = column+"-"+ (quote_calendar.get( Calendar.MONTH )+1);
+				labels[iteration++] = column+"/"+ (quote_calendar.get( Calendar.MONTH )+1);
 			}
 
 			//Log.i("debugger", "Date "+quote.date.toString());
