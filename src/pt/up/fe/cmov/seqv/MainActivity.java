@@ -36,10 +36,8 @@ public class MainActivity extends Activity {
 		btnShares.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				if(isOnline(context)){
-					Intent i = new Intent(context, MyPortfolioActivity.class);
-					startActivity(i);
-				}
+				Intent i = new Intent(context, MyPortfolioActivity.class);
+				startActivity(i);
 			}
 		});
 
@@ -118,11 +116,11 @@ public class MainActivity extends Activity {
 			myPortfolio.put(symbol, number);
 		else
 			Log.e("ERROR", "Update my portfolio failed!");
-		
+
 		updateDatabase(context);		
 	}
-	
-	public static int getNCompanys(){
+
+	public static int getNCompanies(){
 		return myPortfolio.size();
 	}
 

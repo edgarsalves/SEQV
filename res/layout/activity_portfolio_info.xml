@@ -1,42 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".PortfolioInfo" >
+    tools:context=".PortfolioInfoActivity" >
 
     <LinearLayout
+        android:id="@+id/graph_holder_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.96"
         android:orientation="vertical" >
-	    <LinearLayout
-	        android:id="@+id/graph_holder"
-	        android:layout_width="match_parent"
-	        android:layout_height="0dip"
-	        android:layout_weight="0.96"
-	        android:orientation="vertical" >
-	    </LinearLayout>
-	
-	    <LinearLayout
-	        android:id="@+id/info_holder"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:gravity="bottom|left|end"
-	        android:orientation="horizontal" >
-	
-		    <TextView
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="Portfolio Value:" />
-		    <TextView
-		        android:id="@+id/infoText"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/info_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|left|end"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/portfolio_value" />
+
+        <TextView
+            android:id="@+id/infoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -22,7 +22,7 @@
     <string name="compare">Compare</string>
     <string name="title_activity_comparison">Comparison</string>
     <string name="portfolio_info">Portfolio Info</string>
-    <string name="title_activity_portfolio_info">PortfolioInfo</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_portfolio_info">Portfolio Info</string>
+    <string name="portfolio_value">Current portfolio value: </string>
 
 </resources>

@@ -35,7 +35,7 @@ public class MyPortfolioActivity extends Activity {
 	private Context context = this;
 	private ListView lvSearch;
 	public static ArrayList<String> symbols;
-	private TextView tvNCompanys;
+	private TextView tvNCompanies;
 
 	private int counter;
 	private int n;
@@ -155,8 +155,8 @@ public class MyPortfolioActivity extends Activity {
 			}
 		});
 
-		tvNCompanys = (TextView) findViewById(R.id.mpText);
-		tvNCompanys.setText("Companys in my portfolio: " + Integer.toString(MainActivity.getNCompanys()));
+		tvNCompanies = (TextView) findViewById(R.id.mpText);
+		tvNCompanies.setText("Companies in the portfolio: " + Integer.toString(MainActivity.getNCompanies()));
 
 		Button btnAdd = (Button) findViewById(R.id.mpAdd);
 		btnAdd.setOnClickListener(new OnClickListener() {	
@@ -166,13 +166,19 @@ public class MyPortfolioActivity extends Activity {
 				startActivity(i);
 			}
 		});
-		
+
 		Button btnPortfolioInfo = (Button) findViewById(R.id.mpInfo);
 		btnPortfolioInfo.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(context, PortfolioInfo.class);
-				startActivity(i);
+				if(MainActivity.isOnline(context)){
+					if(MainActivity.getNCompanies()>0){
+						Intent i = new Intent(context, PortfolioInfoActivity.class);
+						startActivity(i);
+					}
+					else
+						Toast.makeText(context, "The portfolio is empty!", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 
@@ -181,7 +187,7 @@ public class MyPortfolioActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(MainActivity.isOnline(context)){
-					if(MainActivity.getNCompanys()>1){
+					if(MainActivity.getNCompanies()>1){
 						final Dialog compareDialog = new Dialog(context);
 						compareDialog.setContentView(R.layout.dialog_comparison);
 						compareDialog.setTitle("Comparation");
@@ -203,7 +209,7 @@ public class MyPortfolioActivity extends Activity {
 						compareDialog.show();
 					}
 					else
-						Toast.makeText(context, "Insufficient number of companies to make a comparison!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, "Insufficient companies to make a comparison!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -330,7 +336,7 @@ public class MyPortfolioActivity extends Activity {
 	private void refreshLayout(){
 		symbols = new ArrayList<String>(MainActivity.myPortfolio.keySet());
 		lvSearch.setAdapter(new MyPortfolioAdapter(context));
-		tvNCompanys.setText("Companys in my portfolio: " + Integer.toString(MainActivity.getNCompanys()));
+		tvNCompanies.setText("Companies in the portfolio: " + Integer.toString(MainActivity.getNCompanies()));
 	}
 
 

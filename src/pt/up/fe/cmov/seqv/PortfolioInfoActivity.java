@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PortfolioInfo extends Activity {
+public class PortfolioInfoActivity extends Activity {
 	private Context context = this;
 
 	@Override
@@ -49,7 +49,6 @@ public class PortfolioInfo extends Activity {
 	public void build_graph(String type, String a, String b, String c, String d, String e, String f, String g){
 		//All company symbols
 		ArrayList<String> symbols = new ArrayList<String>(MainActivity.myPortfolio.keySet());
-
 		
 		GraphViewData[] graph_data = null;
 		String[] labels = null;
@@ -106,16 +105,15 @@ public class PortfolioInfo extends Activity {
 		graphView.getGraphViewStyle().setNumHorizontalLabels( num_columns );
 		graphView.getGraphViewStyle().setNumVerticalLabels( graph_data.length );
 
-		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_holder);  
+		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_holder_info);  
 		layout.removeAllViews();
 		layout.addView(graphView);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.portfolio_info, menu);
-		return true;
+		return false;
 	}
 
 }

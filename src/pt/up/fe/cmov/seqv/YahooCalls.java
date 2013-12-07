@@ -12,8 +12,6 @@ import java.util.StringTokenizer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 public class YahooCalls {
 	static String getResponse = null;
 
