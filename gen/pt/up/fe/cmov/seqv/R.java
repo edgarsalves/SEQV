@@ -71,7 +71,7 @@ public final class R {
         public static final int dmpPrice=0x7f09001e;
         public static final int dmpSymbol=0x7f09001c;
         public static final int graph_holder=0x7f09000f;
-        public static final int graph_holder_comparation=0x7f090005;
+        public static final int graph_holder_comparison=0x7f090005;
         public static final int last_month=0x7f090026;
         public static final int last_months=0x7f090025;
         public static final int last_week=0x7f090027;
@@ -90,16 +90,16 @@ public final class R {
         public static final int rowTitle=0x7f09002a;
         public static final int scrollView1=0x7f090018;
         public static final int time_frame=0x7f090010;
-        public static final int time_frame_comparation=0x7f090006;
+        public static final int time_frame_comparison=0x7f090006;
     }
     public static final class layout {
         public static final int activity_add_share=0x7f030000;
-        public static final int activity_comparation=0x7f030001;
+        public static final int activity_comparison=0x7f030001;
         public static final int activity_main=0x7f030002;
         public static final int activity_my_portfolio=0x7f030003;
         public static final int activity_quote_evolution=0x7f030004;
         public static final int dialog_add_share=0x7f030005;
-        public static final int dialog_compare=0x7f030006;
+        public static final int dialog_comparison=0x7f030006;
         public static final int dialog_my_portfolio=0x7f030007;
         public static final int dialog_time_frame=0x7f030008;
         public static final int row_layout=0x7f030009;
@@ -118,7 +118,6 @@ public final class R {
         public static final int compare=0x7f060012;
         public static final int confirm=0x7f060008;
         public static final int exit=0x7f060004;
-        public static final int hello_world=0x7f060014;
         public static final int last_3months=0x7f06000f;
         public static final int last_7days=0x7f060011;
         public static final int last_month=0x7f060010;
@@ -129,7 +128,7 @@ public final class R {
         public static final int see_evolution=0x7f06000c;
         public static final int time_frame=0x7f06000d;
         public static final int title_activity_add_share=0x7f060009;
-        public static final int title_activity_comparation=0x7f060013;
+        public static final int title_activity_comparison=0x7f060013;
         public static final int title_activity_my_portfolio=0x7f06000a;
         public static final int title_activity_quote_evolution=0x7f06000b;
         public static final int yes=0x7f060005;

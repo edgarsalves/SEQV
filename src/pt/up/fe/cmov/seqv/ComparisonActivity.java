@@ -18,15 +18,15 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-public class ComparationActivity extends Activity {
+public class ComparisonActivity extends Activity {
 	private Context context = this;
-	
+
 	private Calendar cal;
 	private String year;
 	private String month;
@@ -37,14 +37,14 @@ public class ComparationActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_comparation);
-		
+		setContentView(R.layout.activity_comparison);
+
 		//Today's date
 		cal = Calendar.getInstance();
 		year = Integer.toString( cal.get(Calendar.YEAR) );
 		month = Integer.toString( cal.get(Calendar.MONTH) );
 		day = Integer.toString( cal.get(Calendar.DAY_OF_MONTH) );
-		
+
 		final Dialog timeFrameDialog = new Dialog(context);
 		timeFrameDialog.setContentView(R.layout.dialog_time_frame);
 		timeFrameDialog.setTitle("Time Frame");
@@ -62,20 +62,24 @@ public class ComparationActivity extends Activity {
 				noGraphFlag = false;
 			}
 		});
-		
+
 		final Button last_year = (Button) timeFrameDialog.findViewById(R.id.last_year);
 		final Button last_months = (Button) timeFrameDialog.findViewById(R.id.last_months);
 		final Button last_month = (Button) timeFrameDialog.findViewById(R.id.last_month);
 		final Button last_week = (Button) timeFrameDialog.findViewById(R.id.last_week);
-		
+
 		//Last Year
 		last_year.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				int year_bef = cal.get(Calendar.YEAR)-1;
 
-				build_graph(context.getString(R.string.last_year), month, day, Integer.toString(year_bef), month, day, year, "m");
-				timeFrameDialog.dismiss();
+				try{
+					build_graph(context.getString(R.string.last_year), month, day, Integer.toString(year_bef), month, day, year, "m");
+					timeFrameDialog.dismiss();
+				} catch (Exception e) {
+					Toast.makeText(context, "Could not make the graph!", Toast.LENGTH_SHORT).show();
+				}
 			}	
 		});
 		//Last Months
@@ -89,8 +93,12 @@ public class ComparationActivity extends Activity {
 					month_bef = 11 + month_bef;
 				}
 
-				build_graph(context.getString(R.string.last_3months), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "w");
-				timeFrameDialog.dismiss();
+				try{
+					build_graph(context.getString(R.string.last_3months), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "w");
+					timeFrameDialog.dismiss();
+				} catch (Exception e) {
+					Toast.makeText(context, "Could not make the graph!", Toast.LENGTH_SHORT).show();
+				}
 			}	
 		});
 		//Last Month
@@ -104,8 +112,12 @@ public class ComparationActivity extends Activity {
 					month_bef = 11 + month_bef;
 				}
 
-				build_graph(context.getString(R.string.last_month), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "d");
-				timeFrameDialog.dismiss();
+				try{
+					build_graph(context.getString(R.string.last_month), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "d");
+					timeFrameDialog.dismiss();
+				} catch (Exception e) {
+					Toast.makeText(context, "Could not make the graph!", Toast.LENGTH_SHORT).show();
+				}
 			}	
 		});
 		//Last Week
@@ -114,17 +126,20 @@ public class ComparationActivity extends Activity {
 				Calendar last_week_calendar = Calendar.getInstance();
 				last_week_calendar.add(Calendar.DAY_OF_YEAR, -7);
 
-				build_graph(context.getString(R.string.last_7days),
-						Integer.toString( last_week_calendar.get(Calendar.MONTH) ), 
-						Integer.toString( last_week_calendar.get(Calendar.DAY_OF_MONTH) ), 
-						Integer.toString( last_week_calendar.get(Calendar.YEAR) ), 
-						month, day, year, "d");
-
-				timeFrameDialog.dismiss();
+				try{
+					build_graph(context.getString(R.string.last_7days),
+							Integer.toString( last_week_calendar.get(Calendar.MONTH) ), 
+							Integer.toString( last_week_calendar.get(Calendar.DAY_OF_MONTH) ), 
+							Integer.toString( last_week_calendar.get(Calendar.YEAR) ), 
+							month, day, year, "d");
+					timeFrameDialog.dismiss();
+				} catch (Exception e) {
+					Toast.makeText(context, "Could not make the graph!", Toast.LENGTH_SHORT).show();
+				}
 			}	
 		});
 
-		Button btn = (Button) findViewById(R.id.time_frame_comparation); 
+		Button btn = (Button) findViewById(R.id.time_frame_comparison); 
 		btn.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View v) {
@@ -134,21 +149,21 @@ public class ComparationActivity extends Activity {
 
 		timeFrameDialog.show();
 	}
-	
+
 	public void build_graph(String type, String a, String b, String c, String d, String e, String f, String g){
 		System.out.println(c);
-		
+
 		String symb1 = MyPortfolioActivity.symbols.get( MyPortfolioActivity.symbol1 );
 		String symb2 = MyPortfolioActivity.symbols.get( MyPortfolioActivity.symbol2 );
 
 		//First Company
 		ArrayList<QuoteEvolution> evo1 = YahooCalls.getQuoteEvolution(a, b, c, d, e, f, g, symb1);
-		
+
 		//Second Company
 		ArrayList<QuoteEvolution> evo2 = YahooCalls.getQuoteEvolution(a, b, c, d, e, f, g, symb2);
 
 		int num_columns = evo1.size();
-		int num_datas = evo1.size() + evo2.size();
+		//int num_datas = evo1.size() + evo2.size();
 		GraphViewData[] graph_data1 = new GraphViewData[ evo1.size() ];
 		GraphViewData[] graph_data2 = new GraphViewData[ evo2.size() ];
 
@@ -158,7 +173,7 @@ public class ComparationActivity extends Activity {
 		for(int i= evo1.size()-1 ; i >= 0 ; i--){
 			//Get quote info
 			QuoteEvolution quote = evo1.get(i);
-			
+
 			//Calendar
 			Calendar quote_calendar = Calendar.getInstance();
 			quote_calendar.setTime(quote.date);
@@ -178,7 +193,7 @@ public class ComparationActivity extends Activity {
 		for(int i= evo2.size()-1 ; i >= 0 ; i--){
 			//Get quote info
 			QuoteEvolution quote = evo2.get(i);
-			
+
 			//Calendar
 			Calendar quote_calendar = Calendar.getInstance();
 			quote_calendar.setTime(quote.date);
@@ -190,11 +205,11 @@ public class ComparationActivity extends Activity {
 		GraphViewDataInterface[] gvData1 = graph_data1;
 		GraphViewDataInterface[] gvData2 = graph_data2;
 
-		GraphViewSeries series1 = new GraphViewSeries(symb1, new GraphViewSeriesStyle(getResources().getColor(R.color.blue2), 1), gvData1);  
-		GraphViewSeries series2 = new GraphViewSeries(symb2, new GraphViewSeriesStyle(getResources().getColor(R.color.orange0), 1), gvData2);  
-		
+		GraphViewSeries series1 = new GraphViewSeries(symb1, new GraphViewSeriesStyle(Color.BLUE, 1), gvData1);  
+		GraphViewSeries series2 = new GraphViewSeries(symb2, new GraphViewSeriesStyle(Color.RED, 1), gvData2);  
+
 		GraphView graphView = new LineGraphView(this, symb1 +" and "+ symb2 + " - " + type); 
-		
+
 		graphView.addSeries(series1); 
 		graphView.addSeries(series2); 
 
@@ -207,11 +222,11 @@ public class ComparationActivity extends Activity {
 		graphView.getGraphViewStyle().setNumHorizontalLabels( num_columns );
 		graphView.getGraphViewStyle().setNumVerticalLabels( Math.max(graph_data1.length, graph_data2.length) );
 		graphView.setShowLegend(true); 
-		graphView.setScrollable(true);
-		graphView.setScalable(true);
+		//graphView.setScrollable(true);
+		//graphView.setScalable(true);
 		//graphView.getGraphViewStyle().setVerticalLabelsWidth(20);
 
-		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_holder_comparation);  
+		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_holder_comparison);  
 		layout.removeAllViews();
 		layout.addView(graphView);
 	}

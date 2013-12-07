@@ -48,8 +48,7 @@ public class AddShareActivity extends Activity {
 		lvSearch.setAdapter(new SearchResultsAdapter(context));
 
 		lvSearch.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,int position, long id) 
-			{
+			public void onItemClick(AdapterView<?> parent, View view,int position, long id){
 				if(MainActivity.isOnline(context)){
 					symbol = symbols.get(position);
 					q = YahooCalls.getQuotes(new ArrayList<String>(Arrays.asList(symbol))).get(0);

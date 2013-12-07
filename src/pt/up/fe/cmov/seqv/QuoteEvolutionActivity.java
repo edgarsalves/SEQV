@@ -10,11 +10,11 @@ import com.jjoe64.graphview.LineGraphView;
 import com.jjoe64.graphview.GraphView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -35,7 +35,7 @@ public class QuoteEvolutionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quote_evolution);
-		
+
 		cal = Calendar.getInstance();
 		year = Integer.toString( cal.get(Calendar.YEAR) );
 		month = Integer.toString( cal.get(Calendar.MONTH) );
@@ -70,8 +70,12 @@ public class QuoteEvolutionActivity extends Activity {
 			public void onClick(View arg0) {
 				int year_bef = cal.get(Calendar.YEAR)-1;
 
-				build_graph(context.getString(R.string.last_year), month, day, Integer.toString(year_bef), month, day, year, "m", MyPortfolioActivity.symbol);
-				timeFrameDialog.dismiss();
+				try {
+					build_graph(context.getString(R.string.last_year), month, day, Integer.toString(year_bef), month, day, year, "m", MyPortfolioActivity.symbol);
+					timeFrameDialog.dismiss();
+				} catch (Exception e) {
+					Toast.makeText(context, "Could not make the graph!", Toast.LENGTH_SHORT).show();
+				}
 			}	
 		});
 		//Last Months
@@ -85,8 +89,12 @@ public class QuoteEvolutionActivity extends Activity {
 					month_bef = 11 + month_bef;
 				}
 
-				build_graph(context.getString(R.string.last_3months), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "w", MyPortfolioActivity.symbol);
-				timeFrameDialog.dismiss();
+				try{
+					build_graph(context.getString(R.string.last_3months), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "w", MyPortfolioActivity.symbol);
+					timeFrameDialog.dismiss();
+				} catch (Exception e) {
+					Toast.makeText(context, "Could not make the graph!", Toast.LENGTH_SHORT).show();
+				}
 			}	
 		});
 		//Last Month
@@ -100,8 +108,12 @@ public class QuoteEvolutionActivity extends Activity {
 					month_bef = 11 + month_bef;
 				}
 
-				build_graph(context.getString(R.string.last_month), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "d", MyPortfolioActivity.symbol);
-				timeFrameDialog.dismiss();
+				try{
+					build_graph(context.getString(R.string.last_month), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "d", MyPortfolioActivity.symbol);
+					timeFrameDialog.dismiss();
+				} catch (Exception e) {
+					Toast.makeText(context, "Could not make the graph!", Toast.LENGTH_SHORT).show();
+				}
 			}	
 		});
 		//Last Week
@@ -110,13 +122,16 @@ public class QuoteEvolutionActivity extends Activity {
 				Calendar last_week_calendar = Calendar.getInstance();
 				last_week_calendar.add(Calendar.DAY_OF_YEAR, -7);
 
-				build_graph(context.getString(R.string.last_7days),
-						Integer.toString( last_week_calendar.get(Calendar.MONTH) ), 
-						Integer.toString( last_week_calendar.get(Calendar.DAY_OF_MONTH) ), 
-						Integer.toString( last_week_calendar.get(Calendar.YEAR) ), 
-						month, day, year, "d", MyPortfolioActivity.symbol);
-
-				timeFrameDialog.dismiss();
+				try{
+					build_graph(context.getString(R.string.last_7days),
+							Integer.toString( last_week_calendar.get(Calendar.MONTH) ), 
+							Integer.toString( last_week_calendar.get(Calendar.DAY_OF_MONTH) ), 
+							Integer.toString( last_week_calendar.get(Calendar.YEAR) ), 
+							month, day, year, "d", MyPortfolioActivity.symbol);
+					timeFrameDialog.dismiss();
+				} catch (Exception e) {
+					Toast.makeText(context, "Could not make the graph!", Toast.LENGTH_SHORT).show();
+				}
 			}	
 		});
 
@@ -168,9 +183,6 @@ public class QuoteEvolutionActivity extends Activity {
 			else {
 				labels[iteration++] = column+"/"+ (quote_calendar.get( Calendar.MONTH )+1);
 			}
-
-			//Log.i("debugger", "Date "+quote.date.toString());
-			//Log.i("debugger", "Column "+column);
 		}
 
 		GraphViewDataInterface[] gvData = graph_data;
@@ -187,8 +199,8 @@ public class QuoteEvolutionActivity extends Activity {
 		graphView.getGraphViewStyle().setTextSize(getResources().getDimension(R.dimen.text_size));
 		graphView.getGraphViewStyle().setNumHorizontalLabels( num_columns );
 		graphView.getGraphViewStyle().setNumVerticalLabels( graph_data.length );
-		graphView.setScrollable(true);
-		graphView.setScalable(true);
+		//graphView.setScrollable(true);
+		//graphView.setScalable(true);
 		//graphView.getGraphViewStyle().setVerticalLabelsWidth(20);
 
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_holder);  

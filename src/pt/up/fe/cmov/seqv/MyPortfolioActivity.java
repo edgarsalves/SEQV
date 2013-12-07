@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -58,35 +57,33 @@ public class MyPortfolioActivity extends Activity {
 		lvSearch.setAdapter(new MyPortfolioAdapter(context));
 
 		lvSearch.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,int position, long id) 
-			{
+			public void onItemClick(AdapterView<?> parent, View view,int position, long id){
 				if(MainActivity.isOnline(context)){
 					symbol = symbols.get(position);
 					name = YahooCalls.getCompanyName(symbol);
 					counter = MainActivity.myPortfolio.get(symbol);
 					q = YahooCalls.getQuotes(new ArrayList<String>(Arrays.asList(symbol))).get(0);
 
-					final Dialog addShareDialog = new Dialog(context);
-					addShareDialog.setContentView(R.layout.dialog_my_portfolio);
-					addShareDialog.setTitle("Set " + symbol);
-					addShareDialog.setOnDismissListener(new OnDismissListener() {
-
+					final Dialog myPortfolioDialog = new Dialog(context);
+					myPortfolioDialog.setContentView(R.layout.dialog_my_portfolio);
+					myPortfolioDialog.setTitle("Set " + symbol);
+					myPortfolioDialog.setOnDismissListener(new OnDismissListener() {
 						@Override
 						public void onDismiss(DialogInterface dialog) {
 							refreshLayout();
 						}
 					});
 
-					final TextView tvSymbol = (TextView) addShareDialog.findViewById(R.id.dmpSymbol);
+					final TextView tvSymbol = (TextView) myPortfolioDialog.findViewById(R.id.dmpSymbol);
 					tvSymbol.setText("Symbol: " + symbol);
 
-					final TextView tvName = (TextView) addShareDialog.findViewById(R.id.dmpName);
+					final TextView tvName = (TextView) myPortfolioDialog.findViewById(R.id.dmpName);
 					tvName.setText("Name: " + name);
 
-					final TextView tvPrice = (TextView) addShareDialog.findViewById(R.id.dmpPrice);
+					final TextView tvPrice = (TextView) myPortfolioDialog.findViewById(R.id.dmpPrice);
 					tvPrice.setText("Price: " + q.price);
 
-					final ImageButton btnEvolution = (ImageButton) addShareDialog.findViewById(R.id.dmpEvolution);
+					final ImageButton btnEvolution = (ImageButton) myPortfolioDialog.findViewById(R.id.dmpEvolution);
 					btnEvolution.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View arg0) {
@@ -97,10 +94,10 @@ public class MyPortfolioActivity extends Activity {
 						}
 					});
 
-					final TextView tvNumber = (TextView) addShareDialog.findViewById(R.id.dmpNumber);
+					final TextView tvNumber = (TextView) myPortfolioDialog.findViewById(R.id.dmpNumber);
 					tvNumber.setText(Integer.toString(counter));
 
-					final ImageButton btnMinus = (ImageButton) addShareDialog.findViewById(R.id.dmpMinus);
+					final ImageButton btnMinus = (ImageButton) myPortfolioDialog.findViewById(R.id.dmpMinus);
 					btnMinus.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -119,7 +116,7 @@ public class MyPortfolioActivity extends Activity {
 						}
 					});
 
-					final ImageButton btnPlus = (ImageButton) addShareDialog.findViewById(R.id.dmpPlus);
+					final ImageButton btnPlus = (ImageButton) myPortfolioDialog.findViewById(R.id.dmpPlus);
 					btnPlus.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -128,14 +125,14 @@ public class MyPortfolioActivity extends Activity {
 						}
 					});
 
-					final Button btnConfirm = (Button) addShareDialog.findViewById(R.id.dmpConfirm);
+					final Button btnConfirm = (Button) myPortfolioDialog.findViewById(R.id.dmpConfirm);
 					btnConfirm.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							n = counter - MainActivity.myPortfolio.get(symbol);
 
 							if(n==0)
-								addShareDialog.dismiss();
+								myPortfolioDialog.dismiss();
 							else{
 								Builder confirmationDialog = new AlertDialog.Builder(context);
 								confirmationDialog.setTitle("");
@@ -146,15 +143,14 @@ public class MyPortfolioActivity extends Activity {
 										if(n!=0)
 											MainActivity.updateMyPortfolio(symbol, n, context);
 										Toast.makeText(context, "Changes saved!", Toast.LENGTH_SHORT).show();
-										addShareDialog.dismiss();
+										myPortfolioDialog.dismiss();
 									}});
 								confirmationDialog.setNegativeButton(R.string.no, null);
 								confirmationDialog.show();
 							}
 						}
 					});
-
-					addShareDialog.show();
+					myPortfolioDialog.show();
 				}
 			}
 		});
@@ -175,28 +171,30 @@ public class MyPortfolioActivity extends Activity {
 		btnCompare.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-				if(MainActivity.getNCompanys()>1){
-					final Dialog compareDialog = new Dialog(context);
-					compareDialog.setContentView(R.layout.dialog_compare);
-					compareDialog.setTitle("Comparation");
+				if(MainActivity.isOnline(context)){
+					if(MainActivity.getNCompanys()>1){
+						final Dialog compareDialog = new Dialog(context);
+						compareDialog.setContentView(R.layout.dialog_comparison);
+						compareDialog.setTitle("Comparation");
 
-					s1 = (Spinner) compareDialog.findViewById(R.id.dcCombobox1);
-					s2 = (Spinner) compareDialog.findViewById(R.id.dcCombobox2);
-					addItemsOnSpinners();
-					setSpinnersListeners();
+						s1 = (Spinner) compareDialog.findViewById(R.id.dcCombobox1);
+						s2 = (Spinner) compareDialog.findViewById(R.id.dcCombobox2);
+						addItemsOnSpinners();
+						setSpinnersListeners();
 
-					Button btnCompare = (Button) compareDialog.findViewById(R.id.dcCompare);
-					btnCompare.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							compareDialog.dismiss();
-
-							Log.i("debugger", "Something 0");
-							Intent i = new Intent(context, ComparationActivity.class);
-							startActivity(i);
-						}
-					});
-					compareDialog.show();
+						Button btnCompare = (Button) compareDialog.findViewById(R.id.dcCompare);
+						btnCompare.setOnClickListener(new OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								compareDialog.dismiss();
+								Intent i = new Intent(context, ComparisonActivity.class);
+								startActivity(i);
+							}
+						});
+						compareDialog.show();
+					}
+					else
+						Toast.makeText(context, "Insufficient number of companies to make a comparison!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -217,7 +215,7 @@ public class MyPortfolioActivity extends Activity {
 				else
 					symbol1 = symbols.indexOf(selected);
 			}
-			
+
 			@Override
 			public void onNothingSelected(AdapterView<?> parentView) {
 			}
@@ -251,7 +249,7 @@ public class MyPortfolioActivity extends Activity {
 		}
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, list);
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		
+
 		s1.setAdapter(dataAdapter);
 		symbol1 = 0;
 		int s1pos = dataAdapter.getPosition(symbols.get(symbol1));

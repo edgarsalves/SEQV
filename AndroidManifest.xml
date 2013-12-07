@@ -38,8 +38,8 @@
             android:label="@string/title_activity_quote_evolution" >
         </activity>
         <activity
-            android:name="pt.up.fe.cmov.seqv.ComparationActivity"
-            android:label="@string/title_activity_comparation" >
+            android:name="pt.up.fe.cmov.seqv.ComparisonActivity"
+            android:label="@string/title_activity_comparison" >
         </activity>
     </application>
 
