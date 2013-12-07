@@ -41,6 +41,10 @@
             android:name="pt.up.fe.cmov.seqv.ComparisonActivity"
             android:label="@string/title_activity_comparison" >
         </activity>
+        <activity
+            android:name="pt.up.fe.cmov.seqv.PortfolioInfo"
+            android:label="@string/title_activity_portfolio_info" >
+        </activity>
     </application>
 
 </manifest>

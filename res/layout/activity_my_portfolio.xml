@@ -44,6 +44,14 @@
                 android:textColor="@color/orange0" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/mpInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_bg"
+            android:text="@string/portfolio_info"
+            android:textColor="@color/orange0" />
+
         <TextView
             android:id="@+id/mpText"
             android:layout_width="wrap_content"

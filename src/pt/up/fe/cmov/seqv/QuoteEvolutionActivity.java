@@ -10,6 +10,7 @@ import com.jjoe64.graphview.LineGraphView;
 import com.jjoe64.graphview.GraphView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -88,6 +89,8 @@ public class QuoteEvolutionActivity extends Activity {
 					year_bef--;
 					month_bef = 11 + month_bef;
 				}
+				Log.i("debugger", cal.get(Calendar.MONTH)+"");
+				Log.i("debugger", month_bef+"");
 
 				try{
 					build_graph(context.getString(R.string.last_3months), Integer.toString(month_bef), "1", Integer.toString(year_bef), month, "31", year, "w", MyPortfolioActivity.symbol);
@@ -170,18 +173,17 @@ public class QuoteEvolutionActivity extends Activity {
 
 			Calendar quote_calendar = Calendar.getInstance();
 			quote_calendar.setTime(quote.date);
+			
 
 			//Add Data to graph
-			int column = g == "m" ? quote_calendar.get( Calendar.MONTH )+1 : (g == "w" ? quote_calendar.get( Calendar.WEEK_OF_MONTH ) : quote_calendar.get( Calendar.DAY_OF_MONTH ) );
+			int column = g == "m" ? quote_calendar.get( Calendar.MONTH )+1 : (g == "w" ? quote_calendar.get( Calendar.WEEK_OF_MONTH )-1 : quote_calendar.get( Calendar.DAY_OF_MONTH ) );
 			graph_data[iteration] = new GraphViewData(num_columns-iteration, quote.close);
 
 			if( g == "m"){
-				//String year_str = Integer.toString(quote_calendar.get( Calendar.YEAR ));
-				//String year_short = year_str.substring(2);
 				labels[iteration++] = column+"";
 			}
 			else {
-				labels[iteration++] = column+"/"+ (quote_calendar.get( Calendar.MONTH )+1);
+				labels[iteration++] = column+"|"+ (quote_calendar.get( Calendar.MONTH )+1);
 			}
 		}
 
@@ -199,9 +201,6 @@ public class QuoteEvolutionActivity extends Activity {
 		graphView.getGraphViewStyle().setTextSize(getResources().getDimension(R.dimen.text_size));
 		graphView.getGraphViewStyle().setNumHorizontalLabels( num_columns );
 		graphView.getGraphViewStyle().setNumVerticalLabels( graph_data.length );
-		//graphView.setScrollable(true);
-		//graphView.setScalable(true);
-		//graphView.getGraphViewStyle().setVerticalLabelsWidth(20);
 
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_holder);  
 		layout.removeAllViews();

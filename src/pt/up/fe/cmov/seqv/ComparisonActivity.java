@@ -179,14 +179,14 @@ public class ComparisonActivity extends Activity {
 			quote_calendar.setTime(quote.date);
 
 			//Add Data to graph
-			int column = g == "m" ? quote_calendar.get( Calendar.MONTH )+1 : (g == "w" ? quote_calendar.get( Calendar.WEEK_OF_MONTH ) : quote_calendar.get( Calendar.DAY_OF_MONTH ) );
+			int column = g == "m" ? quote_calendar.get( Calendar.MONTH )+1 : (g == "w" ? quote_calendar.get( Calendar.WEEK_OF_MONTH )-1 : quote_calendar.get( Calendar.DAY_OF_MONTH ) );
 			graph_data1[iteration] = new GraphViewData(num_columns-iteration, quote.close);
 
 			if( g == "m"){
 				labels[iteration++] = column+"";
 			}
 			else {
-				labels[iteration++] = column+"/"+ (quote_calendar.get( Calendar.MONTH )+1);
+				labels[iteration++] = column+"|"+ (quote_calendar.get( Calendar.MONTH )+1);
 			}
 		}
 		iteration = 0;
@@ -222,9 +222,6 @@ public class ComparisonActivity extends Activity {
 		graphView.getGraphViewStyle().setNumHorizontalLabels( num_columns );
 		graphView.getGraphViewStyle().setNumVerticalLabels( Math.max(graph_data1.length, graph_data2.length) );
 		graphView.setShowLegend(true); 
-		//graphView.setScrollable(true);
-		//graphView.setScalable(true);
-		//graphView.getGraphViewStyle().setVerticalLabelsWidth(20);
 
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_holder_comparison);  
 		layout.removeAllViews();

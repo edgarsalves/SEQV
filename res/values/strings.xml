@@ -21,5 +21,8 @@
     <string name="last_7days">Last 7 days</string>
     <string name="compare">Compare</string>
     <string name="title_activity_comparison">Comparison</string>
+    <string name="portfolio_info">Portfolio Info</string>
+    <string name="title_activity_portfolio_info">PortfolioInfo</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

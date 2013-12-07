@@ -166,6 +166,15 @@ public class MyPortfolioActivity extends Activity {
 				startActivity(i);
 			}
 		});
+		
+		Button btnPortfolioInfo = (Button) findViewById(R.id.mpInfo);
+		btnPortfolioInfo.setOnClickListener(new OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(context, PortfolioInfo.class);
+				startActivity(i);
+			}
+		});
 
 		Button btnCompare = (Button) findViewById(R.id.mpCompare);
 		btnCompare.setOnClickListener(new OnClickListener() {	
