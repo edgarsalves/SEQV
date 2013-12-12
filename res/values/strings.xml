@@ -24,5 +24,8 @@
     <string name="portfolio_info">Portfolio Info</string>
     <string name="title_activity_portfolio_info">Portfolio Info</string>
     <string name="portfolio_value">Current portfolio value: </string>
+    <string name="options">Options</string>
+    <string name="confirm_option">Confirm</string>
+    
 
 </resources>
