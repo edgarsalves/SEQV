@@ -13,19 +13,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Portfolio Value" />
+            android:text="@string/port_value" />
 
         <RadioButton
             android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stock value" />
+            android:text="@string/stock_value" />
 
         <RadioButton
             android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stock number" />
+            android:text="@string/stock_number" />
     </RadioGroup>
 
     <LinearLayout

@@ -139,10 +139,13 @@ public final class R {
         public static final int my_portfolio=0x7f060002;
         public static final int no=0x7f060006;
         public static final int options=0x7f060017;
+        public static final int port_value=0x7f060019;
         public static final int portfolio_info=0x7f060014;
         public static final int portfolio_value=0x7f060016;
         public static final int search=0x7f060007;
         public static final int see_evolution=0x7f06000c;
+        public static final int stock_number=0x7f06001b;
+        public static final int stock_value=0x7f06001a;
         public static final int time_frame=0x7f06000d;
         public static final int title_activity_add_share=0x7f060009;
         public static final int title_activity_comparison=0x7f060013;

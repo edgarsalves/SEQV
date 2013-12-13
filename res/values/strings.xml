@@ -26,6 +26,8 @@
     <string name="portfolio_value">Current portfolio value: </string>
     <string name="options">Options</string>
     <string name="confirm_option">Confirm</string>
-    
+    <string name="port_value">Portfolio value</string>
+    <string name="stock_value">Stock value</string>
+    <string name="stock_number">Stock number</string>
 
 </resources>
